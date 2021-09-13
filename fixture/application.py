@@ -131,7 +131,7 @@ class Application:
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys(contact.notes)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
-        self.return_to_home_page()
+        wd.return_to_home_page()
 
     def destroy(self):
         self.wd.quit()
