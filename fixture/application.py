@@ -2,29 +2,14 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
+from fixture.session import SessionHelper
 
 class Application:
 
     def __init__(self):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(60)
-
-    def login(self, username, password):
-        wd = self.wd
-        # login
-        self.open_home_page()
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys(username)
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys(password)
-        wd.find_element_by_xpath("//input[@value='Login']").click()
-        self.open_group_page()
-
-    def logout(self):
-        wd = self.wd
-        wd.find_element_by_link_text("Logout").click()
+        self.session = SessionHelper(self)
 
     def create_group(self, group):
         wd = self.wd
@@ -131,7 +116,7 @@ class Application:
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys(contact.notes)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
-        wd.return_to_home_page()
+        self.return_to_home_page()
 
     def destroy(self):
         self.wd.quit()
