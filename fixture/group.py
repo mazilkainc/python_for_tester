@@ -8,6 +8,7 @@ class GroupHelper:
         wd = self.app.wd
         self.open_group_page()
         # open create group
+        wd.find_element_by_name("new").click()
         wd.find_element_by_name("group_name").click()
         wd.find_element_by_name("group_name").clear()
         wd.find_element_by_name("group_name").send_keys(group.name)
@@ -24,7 +25,16 @@ class GroupHelper:
     def open_group_page(self):
          wd = self.app.wd
          # open group page
-         wd.get("http://localhost/addressbook/group.php?new=New+group")
+         wd.get("http://localhost/addressbook/group.php")
+
+    def delete_first_group(self):
+        wd = self.app.wd
+        self.open_group_page()
+        # select first group
+        wd.find_element_by_name("selected[]").click()
+        # submit deletion
+        wd.find_element_by_name("delete").click()
+        self.return_to_groups_page()
 
     def return_to_groups_page(self):
         wd = self.app.wd
